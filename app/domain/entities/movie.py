@@ -3,7 +3,11 @@ from domain.entities.review import Review
 class Movie:
     def __init__(self, imdb_id: str):
         self.imdb_id = imdb_id
-        self.reviews = []
+        self.title = None
+        self.year = None
+        self.genre = None
+        self.director = None
+        self.reviews: list[Review] = []
 
     def add_review(self, user_opinion: str, user_rating: int):
         review = Review(user_opinion=user_opinion, user_rating=user_rating)

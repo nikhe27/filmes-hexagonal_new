@@ -1,64 +1,57 @@
-# 🎬 Filmes Hexagonal API
+# Filmes Hexagonal API 
 
-API desenvolvida com **FastAPI**, **Arquitetura Hexagonal**, **DDD** e princípios de **Clean Architecture**. Permite criar e buscar filmes com avaliações personalizadas.
+Este projeto é uma API que simula um sistema de cadastro e busca de filmes, feita em **Python com FastAPI**, seguindo princípios modernos de arquitetura como:
 
----
-
-## 📁 Estrutura do Projeto
-
-```
-app/
-├── adapters/                    # Interface de entrada e saída
-│   └── api/
-│       ├── routers/             # Rotas da API
-│       │   ├── create_movie.py
-│       │   └── search_movie.py
-│       └── schemas.py           # Schemas Pydantic (Request/Response)
-├── application/                 # Casos de uso
-│   └── use_cases/
-│       └── create_movie_use_case.py
-├── domain/                      # Entidades de negócio
-│   └── entities/
-│       └── movie.py
-├── infrastructure/             # Implementações técnicas
-│   └── database/
-│       └── repository/
-│           ├── __init__.py
-│           └── movie_repository.py
-main.py                          # Instância da FastAPI e registro das rotas
-```
+- Arquitetura Hexagonal
+- Domain-Driven Design (DDD
+- Clean Architecture**
+-  Tudo dockerizado pra facilitar
 
 ---
 
-## 🚀 Como executar o projeto
+## O que essa API faz
 
-### Pré-requisitos
+Ela tem **duas funcionalidades principais**:
 
-- [Docker](https://www.docker.com/)
-- [Docker Compose](https://docs.docker.com/compose/)
+1. **Criar um filme** com base em um IMDb ID, uma nota e sua opinião pessoal.
+2. **Buscar filmes** pelo título (simulado, com dados mockados por enquanto).
 
-### Passos:
+> Os dados dos filmes (título, diretor, etc.) são preenchidos automaticamente com valores fictícios simulando uma integração com a OMDb.
+
+---
+
+## ▶️ Como rodar esse projeto
+
+1. Tenha **Docker e Docker Compose** instalados.
+2. No terminal, vá até a raiz do projeto e rode:
 
 ```bash
-# Subir os containers
 docker-compose up --build -d
-
-# Acompanhar os logs
-docker logs -f filmes-hexagonal_new-app-1
 ```
 
-A API estará disponível em:  
-**[http://localhost:8000/docs](http://localhost:8000/docs)**
+3. Espere até o log mostrar:
+
+```
+Uvicorn running on http://0.0.0.0:8000
+```
+
+4. Vá para o navegador e acesse:
+```
+http://localhost:8000/docs
+```
+
+Você vai ver a interface de testes do FastAPI (Swagger UI).
 
 ---
 
-## 🔍 Como testar os endpoints
+##  Como testar a API sem erro
 
-### 📮 POST /create-movie
+###  Teste 1: Criar um filme
 
-Cria um novo filme com dados da OMDb e avaliação personalizada.
+1. No Swagger, clique em `POST /create-movie`
+2. Clique em **"Try it out"**
+3. No corpo da requisição (Request body), cole isso:
 
-**Payload de exemplo:**
 ```json
 {
   "imdb_id": "tt0133093",
@@ -67,52 +60,48 @@ Cria um novo filme com dados da OMDb e avaliação personalizada.
 }
 ```
 
----
+4. Clique em **"Execute"**
 
-### 🔎 GET /search-movie
+Se tudo estiver certo, você vai ver uma resposta como esta:
 
-Busca filmes mockados por título:
-
-**Exemplo de chamada:**
-```
-GET /search-movie?title=Matrix
-```
-
-**Resposta mockada:**
 ```json
-[
-  {
-    "imdb_id": "tt0133093",
-    "title": "The Matrix",
-    "year": "1999",
-    "genre": "Action, Sci-Fi",
-    "director": "The Wachowskis",
-    "plot": "A computer hacker learns from mysterious rebels about the true nature of his reality.",
-    "user_opinion": "Muito bom!",
-    "user_rating": 9
-  }
-]
+{
+  "imdb_id": "tt0133093",
+  "title": "The Matrix",
+  "year": "1999",
+  "genre": "Action, Sci-Fi",
+  "director": "The Wachowskis",
+  "plot": "A computer hacker learns from mysterious rebels about the true nature of his reality.",
+  "user_opinion": "Um clássico da ficção científica!",
+  "user_rating": 10
+}
 ```
 
----
-
-## 🧠 Tecnologias e padrões utilizados
-
-- ✅ FastAPI
-- ✅ Docker e Docker Compose
-- ✅ Arquitetura Hexagonal
-- ✅ Domain-Driven Design (DDD)
-- ✅ Clean Architecture
-- ✅ Pydantic
-- ✅ Uvicorn
+> Isso significa que seu projeto está funcionando perfeitamente.
 
 ---
 
-## 💬 Observações
+###  Teste 2: Buscar filmes
 
-- A API está preparada para ser expandida com banco de dados real e integração completa com OMDb.
-- Por enquanto, `search_by_title()` retorna dados mockados.
+1. No Swagger, clique em `GET /search-movie`
+2. Clique em **"Try it out"**
+3. No campo `title`, digite:
+
+```
+Matrix
+```
+
+4. Clique em **"Execute"**
+
+Você verá uma lista com um único filme mockado do Matrix.
 
 ---
 
-Desenvolvido por Monique Zanella 🤘🖤
+##  Observações
+
+- O projeto está pronto para crescer: você pode facilmente integrar com banco de dados, autenticação, OMDb real, etc.
+- Por enquanto, todos os dados retornados são simulações feitas internamente (mock).
+
+---
+
+Desenvolvido por Monique 
